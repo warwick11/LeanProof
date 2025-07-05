@@ -165,3 +165,19 @@ example (p : ψ → φ)(q : ψ → χ) : ψ → (φ ∧ χ) := by
   have f := And.intro p_ q_
   apply f
   done
+
+-- 4章
+------------------
+--- 否定
+------------------
+example : φ → ¬¬φ := by
+  intro p q
+  have r := q p
+  apply r
+  done
+
+example : φ → ((φ → False) → False) := by
+  intro p q
+  have r := q p
+  apply r
+  done
