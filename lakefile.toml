@@ -1,0 +1,10 @@
+name = "Franziskaner"
+version = "0.1.0"
+defaultTargets = ["franziskaner"]
+
+[[lean_lib]]
+name = "Franziskaner"
+
+[[lean_exe]]
+name = "franziskaner"
+root = "Main"
