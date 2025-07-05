@@ -130,3 +130,38 @@ example (p : φ ∨ χ) : (χ ∨ φ):= by
   | inl p1 => apply Or.inr p1
   | inr p2 => apply Or.inl p2
   done
+
+-- 3章
+------------------
+--- ならばの導入
+------------------
+example (p: φ) : χ → φ := by
+  intro q
+  apply p
+  done
+
+example : φ → (χ → φ) := by
+  intro q r
+  apply q
+  done
+
+------------------
+--- ならばの除去
+------------------
+example (p : φ → (χ → ψ)) : χ → (φ → ψ) := by
+  intro q r
+  have s := p r q
+  apply s
+  done
+
+-- カリー・ハワード対応
+-- 命題は型、証明はプログラムに相当する
+
+-- 3.17
+example (p : ψ → φ)(q : ψ → χ) : ψ → (φ ∧ χ) := by
+  intro r
+  have p_ := p r
+  have q_ := q r
+  have f := And.intro p_ q_
+  apply f
+  done
