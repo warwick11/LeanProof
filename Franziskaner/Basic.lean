@@ -166,18 +166,61 @@ example (p : ψ → φ)(q : ψ → χ) : ψ → (φ ∧ χ) := by
   apply f
   done
 
+-- 3.18
+example (p : φ → ψ)(q : χ → ψ) : (φ ∨ χ) → ψ := by
+  intro f
+  cases f with
+  | inl f1 => apply p f1
+  | inr f2 => apply q f2
+  done
+
 -- 4章
 ------------------
 --- 否定
 ------------------
+notation "⊥" => False
+
+-- 4.8
 example : φ → ¬¬φ := by
   intro p q
   have r := q p
   apply r
   done
 
-example : φ → ((φ → False) → False) := by
+example : φ → ((φ → ⊥) → ⊥) := by
   intro p q
   have r := q p
   apply r
+  done
+
+-- 4.11
+example : (¬φ ∧ ¬χ) → ¬(φ ∨ χ) := by
+  intro a t
+  have r := And.left a
+  cases t with
+  | inl t1 => apply r t1
+  | inr t2 => have f := And.right a
+              apply f t2
+  done
+
+-- 4.18
+example (p : ¬φ ∨ χ) : (φ → χ) := by
+  intro a
+  cases p with
+  | inl p1 => apply False.elim (p1 a) -- EFQ
+  | inr p2 => apply p2
+
+example (p : ¬φ ∨ χ) : (φ → χ) := by
+  intro a
+  cases p with
+  | inl p1 => have bottom := (p1 a)
+              have chi: χ := False.elim bottom
+              apply chi
+  | inr p2 => apply p2
+
+-- 4.24
+example :¬¬φ → φ := by
+  intro a
+  apply Classical.byContradiction -- 背理法
+  apply a
   done
