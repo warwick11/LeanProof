@@ -224,3 +224,35 @@ example :¬¬φ → φ := by
   apply Classical.byContradiction -- 背理法
   apply a
   done
+
+-- 4.35
+example (p: ¬¬φ → ¬¬χ): ¬¬(φ → χ) := by
+  intro h
+  have hnnφ: ¬¬φ := by
+    intro hnφ
+    apply h
+    intro hφ
+    exact absurd hφ hnφ
+  have hnχ : ¬χ := by
+    intro hχ
+    apply h
+    intro _
+    exact hχ
+  have hnnχ : ¬¬χ := p hnnφ
+  exact hnnχ hnχ
+  done
+
+example (p: ¬¬φ → ¬¬χ): ¬¬(φ → χ) := by
+  intro h
+  apply p
+  . intro hnφ
+    apply h
+    intro hφ
+    exact absurd hφ hnφ
+  . intro hχ
+    apply h
+    intro _
+    exact hχ
+
+
+-- 4.36
